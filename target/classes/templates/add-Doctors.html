@@ -17,8 +17,8 @@
 <div layout:fragment="content">
 
     <div class="container">
-        <h1>Add a Doctors</h1>
-        <form method="post" th:object="${doctor}" th:action="@{/doctors/add}">
+        <h1>Add a Doctor</h1>
+        <form method="post" th:object="${doctor}" th:action="@{admin/doctors/add}">
             <label>Name:</label><br>
             <input type="text" th:field="*{name}"/><br>
             <label>Email:</label><br>

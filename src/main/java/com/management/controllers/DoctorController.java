@@ -104,7 +104,7 @@ private PatientRepository patientRepository;
         }
         return "patients";
     }
-    @GetMapping("/doctors/add")
+    @GetMapping("admin/doctors/add")
     public ModelAndView addDoctor() {
         ModelAndView modelAndView = new ModelAndView("add-Doctors");
         modelAndView.addObject("doctor", new Doctor());
@@ -113,7 +113,7 @@ private PatientRepository patientRepository;
 
 
 
-    @PostMapping("/doctors/add")
+    @PostMapping("admin/doctors/add")
     public ModelAndView addDoctorSubmit(@ModelAttribute Doctor doctor) {
         doctorService.createDoctor(doctor);
         return new ModelAndView("redirect:/doctors/list");

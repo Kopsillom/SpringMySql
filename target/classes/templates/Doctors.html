@@ -24,8 +24,9 @@
               <input type="text" class="form-control" name="keyword">
             </li>
             <li>
-              <button class="btn btn-info">
-                <i class="bi bi-search"></i>
+              <button type="button" class="btn btn-inverse btn-info">
+                SEARCH
+
               </button>
             </li>
           </ul>
@@ -41,23 +42,29 @@
             <td th:text="${p.id}"></td>
             <td th:text="${p.name}"></td>
             <td th:text="${p.email}"></td>
-            <td><img th:src="${p.image}" width="150" height="100"></td>
+            <th >                <img class="img-fluid" th:src="${p.image}" width="100" height="50" >
+              </th>
             <td th:text="${p.specialty}"></td>
             <td th:text="${p.city}"></td>
+            <td></td>
             <td>
               <a onclick="return confirm('Etes vous sûre?')" class="btn btn-danger"
                  th:href="@{deletePatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">
-                <i class="bi bi-trash"></i>
+               DELETE
               </a>
             </td>
             <td>
-              <a  class="btn btn-danger"
+              <a  class="btn btn-inverse btn-warning"
                   th:href="@{editPatient(id=${p.id})}">
-                <i class="bi bi-pencil"></i>
+                EDIT
               </a>
             </td>
 
           </tr>
+          <a  class="btn btn-inverse btn-success"
+              th:href="@{/admin/doctors/add}">
+            ADD
+          </a>
           </tbody>
         </table>
         <ul class="nav nav-pills">
