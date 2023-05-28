@@ -29,29 +29,29 @@ public class SecurityConfig {
     private DataSource dataSource;
     @Autowired
     private PasswordEncoder passwordEncoder;
-@Autowired
-private UserDetailServicesImpl userDetailServices;
-//@Bean
-public UserDetailsService jdbcUserDetailsService(DataSource dataSource) {
-    JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+    @Autowired
+    private UserDetailServicesImpl userDetailServices;
+    //@Bean
+    public UserDetailsService jdbcUserDetailsService(DataSource dataSource) {
+        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
 
-    return userDetailsManager;
-}
-//@Bean
-public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource){
+        return userDetailsManager;
+    }
+    //@Bean
+    public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource){
 
-    return new JdbcUserDetailsManager(dataSource);
-}
-   // @Bean
+        return new JdbcUserDetailsManager(dataSource);
+    }
+    // @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
         return new InMemoryUserDetailsManager(
-        User.withUsername("user1").password(passwordEncoder.encode("123")).roles("USER").build(),
-        User.withUsername("ADMIN").password(passwordEncoder.encode("12345")).roles("USER","ADMIN","DOCTER").build(),
+                User.withUsername("user1").password(passwordEncoder.encode("123")).roles("USER").build(),
+                User.withUsername("ADMIN").password(passwordEncoder.encode("12345")).roles("USER","ADMIN","DOCTER").build(),
                 User.withUsername("docter").password(passwordEncoder.encode("00123")).roles("DOCTER").build()
         );
     }
     @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws  Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws  Exception{
 
 
         httpSecurity.formLogin().loginPage("/login").defaultSuccessUrl("/")
@@ -59,7 +59,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
                 .and()
                 .logout()
                 .permitAll();;
-    httpSecurity.authorizeHttpRequests().requestMatchers("/user/**").hasRole("PATIENT");
+        httpSecurity.authorizeHttpRequests().requestMatchers("/user/**").hasRole("PATIENT");
         httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN");
         httpSecurity.authorizeHttpRequests().requestMatchers("/doctors/**").hasRole("DOCTOR");
         httpSecurity.authorizeHttpRequests().requestMatchers("/register/**").permitAll();
@@ -68,8 +68,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
         httpSecurity.exceptionHandling().accessDeniedPage("/notAuthorized");
         httpSecurity.rememberMe().and()
                 .csrf().disable();;
-                httpSecurity.userDetailsService(userDetailServices);
+        httpSecurity.userDetailsService(userDetailServices);
 
-    return  httpSecurity.build();
-}
+        return  httpSecurity.build();
+    }
 }
