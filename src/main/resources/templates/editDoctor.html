@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Doctor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="p-3">
+    <form method="post" th:action="@{/admin/saveDoctor}">
+      <div class="mb-3 mt-3">
+        <label for="id" class="form-label">ID:</label>
+        <label th:text="${doctor.id}"></label>
+        <input type="hidden" class="form-control" id="id" placeholder="ID" name="id" th:value="${doctor.id}">
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="name" class="form-label">Nom:</label>
+        <input type="text" class="form-control" id="name" placeholder="name" name="name" th:value="${doctor.name}">
+        <span class="text-danger" th:errors="${doctor.name}"></span>
+      </div>
+      <div class="mb-3">
+        <label for="image" class="form-label">Image:</label>
+        <input type="text" class="form-control" id="image" placeholder="image" name="image" th:value="${doctor.image}">
+
+      </div>
+      <div class="mb-3">
+        <img class="img-fluid" id="preview-image" th:src="${doctor.image}" width="150" height="100">
+      </div>
+      <div class="mb-3">
+        <label for="city" class="form-label">Image:</label>
+        <input type="text" class="form-control" id="city" placeholder="city" name="city" th:value="${doctor.city}">
+
+      </div>
+      <div class="mb-3">
+        <label for="specialty" class="form-label">Speciality:</label>
+        <input type="text" class="form-control" id="specialty" placeholder="specialty" name="specialty" th:value="${doctor.specialty}">
+
+      </div>
+      <script>
+        document.getElementById("image").addEventListener("input", function() {
+          var imageUrl = this.value;
+          document.getElementById("preview-image").src = imageUrl;
+        });
+      </script>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

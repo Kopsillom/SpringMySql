@@ -77,10 +77,10 @@ public class PatientController {
     @PostMapping({"/savePatient"})
     public String savePatient(@Valid Patient patient, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "formPatient";
+            return "redirect:/admin/doctors/patients";
         } else {
             this.patientRepository.save(patient);
-            return "formPatient";
+            return "redirect:/admin/doctors/patients";
         }
     }
 

@@ -13,8 +13,8 @@
 <div layout:fragment="content" >
     <h1 class="title">Available Doctors</h1>
     <div th:each="doctor : ${doctors}" class="card">
-        <div class="imgBox">
-            <img class="img-fluid" th:src="${doctor.image}" th:alt="${doctor.name}" width="auto" height="200" >
+        <div class="imgBox" >
+            <img class="img-thumbnail" th:src="${doctor.image}" th:alt="${doctor.name}"  width="200" height="150" >
         </div>
         <div class="contentBox">
             <h3 th:text="${doctor.name}"></h3>
@@ -80,5 +80,14 @@
         background: #13a8cb;
         text-transform: uppercase;
     }
+    .img-thumbnail
+    {
 
+        align-self: center;
+margin-left: 60px;
+
+
+        background: #1b1e24;
+
+    }
 </style>

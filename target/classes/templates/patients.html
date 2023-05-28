@@ -42,7 +42,7 @@
               <td th:text="${patient.nom}"></td>
               <td th:text="${patient.dateNaissance}"></td>
               <td th:text="${patient.malade}"></td>
-              <td th:text="${patient.Type}"></td>
+              <td th:text="${patient.type}"></td>
               <td>
                 <form th:action="@{/edit/{id}(id=${patient.id})}" method="get">
                   <button type="submit" class="btn btn-primary">Edit</button>

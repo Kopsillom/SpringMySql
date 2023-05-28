@@ -6,6 +6,7 @@ import com.management.repositories.PatientRepository;
 import com.management.repositories.UserRepository;
 import com.management.services.DoctorService;
 import com.management.services.PatientBookingServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,9 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.print.Doc;
 import java.util.*;
 
 @Controller
@@ -38,12 +41,16 @@ private PatientRepository patientRepository;
         this.doctorService = doctorService;
     }
     @GetMapping({"/admin/doctors/list"})
-    public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page, @RequestParam(name = "size",defaultValue = "10") int size, @RequestParam(name = "keyword",defaultValue = "") String kw) {
-        Page<Doctor> pagePatients = this.doctorRepository.findByNameContains(kw, PageRequest.of(page, size));
+    public String index(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(name = "size",defaultValue = "10") int size, @RequestParam(name = "keyword",defaultValue = "") String kw) {
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<Doctor> pagePatients = this.doctorRepository.findByNameContains(kw, pageable);
+
         model.addAttribute("listDoctors", pagePatients.getContent());
-        model.addAttribute("pages", new int[pagePatients.getTotalPages()]);
-        model.addAttribute("currentPage", page);
+
+
+        model.addAttribute("Page", pagePatients);
         model.addAttribute("keyword", kw);
+
         return "Doctors";
     }
 
@@ -104,7 +111,7 @@ private PatientRepository patientRepository;
         }
         return "patients";
     }
-    @GetMapping("admin/doctors/add")
+    @GetMapping("/admin/doctors/add")
     public ModelAndView addDoctor() {
         ModelAndView modelAndView = new ModelAndView("add-Doctors");
         modelAndView.addObject("doctor", new Doctor());
@@ -113,10 +120,25 @@ private PatientRepository patientRepository;
 
 
 
-    @PostMapping("admin/doctors/add")
+    @PostMapping("/admin/doctors/add")
     public ModelAndView addDoctorSubmit(@ModelAttribute Doctor doctor) {
         doctorService.createDoctor(doctor);
         return new ModelAndView("redirect:/doctors/list");
+    }
+    @GetMapping({"/admin/editDoctor"})
+    public String editPatient(@RequestParam(name = "id") Long id, Model model) {
+        Doctor doctor = (Doctor) this.doctorRepository.findById(id).get();
+        model.addAttribute("doctor", doctor);
+        return "editDoctor";
+    }
+    @PostMapping({"/admin/saveDoctor"})
+    public String savePatient(@Valid Doctor doctor, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add-Doctors";
+        } else {
+            this.doctorRepository.save(doctor);
+            return "redirect:/admin/doctors/list";
+        }
     }
     @GetMapping("/admin/doctors/appointments")
     public String viewAppointments(Model model) {

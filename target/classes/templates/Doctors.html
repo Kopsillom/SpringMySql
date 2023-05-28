@@ -5,7 +5,7 @@
 >
 <head>
   <meta charset="UTF-8">
-  <title>Patients Patients</title>
+  <title>DOCTORS</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 
 </head>
@@ -15,7 +15,7 @@
     <div class="card">
       <div class="card-header">Liste des Docteurs</div>
       <div class="card-body">
-        <form method="get" th:href="@{index}">
+        <form method="get" th:href="@{/admin/doctors/list}">
           <ul class="nav nav-pills">
             <li>
               <label class="form-label">Keyword:</label>
@@ -49,13 +49,13 @@
             <td></td>
             <td>
               <a onclick="return confirm('Etes vous sûre?')" class="btn btn-danger"
-                 th:href="@{deletePatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">
+                 th:href="@{/admin/deletePatient(id=${p.id}, keyword=${keyword})}">
                DELETE
               </a>
             </td>
             <td>
               <a  class="btn btn-inverse btn-warning"
-                  th:href="@{editPatient(id=${p.id})}">
+                  th:href="@{/admin/editDoctor(id=${p.id})}">
                 EDIT
               </a>
             </td>
@@ -67,15 +67,24 @@
           </a>
           </tbody>
         </table>
-        <ul class="nav nav-pills">
-          <li th:each="page,status:${pages}">
-            <a
-                    th:class="${status.index==currentPage?'btn btn-info ms-1':'btn btn-outline-info ms-1'}"
-                    th:href="@{index(page=${status.index}, keyword=${keyword})}"
-                    th:text="${status.index}">
-            </a>
-          </li>
-        </ul>
+        <div class="pagination">
+          <ul>
+            <li th:if="${Page.number > 0}">
+              <a th:href="@{/admin/doctors/list(page=${Page.number - 1})}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(0, Page.totalPages - 1)}"
+                th:class="${i == Page.number} ? 'active' : ''">
+              <a th:href="@{/admin/doctors/list( page=${i}, keyword=${keyword})}" th:text="${i + 1}"></a>
+            </li>
+            <li th:if="${Page.number < Page.totalPages - 1}">
+              <a th:href="@{/admin/doctors/list(page=${Page.number + 1})}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
