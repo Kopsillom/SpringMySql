@@ -14,7 +14,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div><a class="nav-link active" th:href="@{/register/doctors}">Are you a Doctor?</a></div>
+    <div><h1 class="g-5">Are you a Doctor? </h1><a class="text-white" th:href="@{/register/doctors}">Register here</a></div>
 <form method="post" th:action="@{/login}">
 
     <div class="svgContainer">
@@ -581,7 +581,6 @@
         border: solid 2.5px #43a047;
         border-radius: 50%;
     }
-
     form .inputGroup {
         margin: 0 0 2em;
         padding: 0;
