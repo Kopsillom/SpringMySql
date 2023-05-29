@@ -8,27 +8,35 @@
     <title>Patients </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <style>
-        /* Add some styling to the form */
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
             background-color: #f2f2f2;
         }
 
-        h2 {
+        .container {
+            margin-top: 20px;
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
             color: #333333;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         label {
-            display: block;
-            margin-top: 10px;
             font-weight: bold;
+            margin-top: 10px;
         }
 
         input[type="text"],
+        input[type="email"],
         input[type="password"] {
-            width: 300px;
+            width: 100%;
             padding: 10px;
             border: 1px solid #cccccc;
             border-radius: 4px;
@@ -42,12 +50,14 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 <div layout:fragment="content">
 <h1>Registration Form</h1>
+    <div class="container">
     <form method="post" th:object="${patient}" th:action="@{/register}">
         <label>name:</label><br>
         <input type="text"  th:field="*{nom}"/><br>
@@ -64,6 +74,7 @@
 
         <input type="submit" value="Register">
     </form>
+</div>
 </div>
 </body>
 </html>
